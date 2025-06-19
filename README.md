@@ -140,24 +140,29 @@ If you want to turn off the quota completely, pass `quota=false` instead.
 
 Use the `env` option to inject additional variables to the environment in which the sandboxed code is executed.
 
-    local msg = sandbox.run('return foo', {env = {foo = 'This is a global var on the the environment'}})
+```lua
+local msg = sandbox.run('return foo', {env = {foo = 'This is a global var on the the environment'}})
+```
 
 The `env` variable will be used as an "index" by the sandbox environment, but it will *not* be modified at all (changes
 to the environment are thus lost). The only way to "get information out" from the sandboxed environments are:
 
 Through side effects, like writing to a database. You will have to provide the side-effects functions in `env`:
 
-    local val = 1
-    local env = { write_db = function(new_val) val = new_val end }
-    sandbox.run('write_db(2)', { env = env })
-    assert(val = 2)
+```lua
+local val = 1
+local env = { write_db = function(new_val) val = new_val end }
+sandbox.run('write_db(2)', { env = env })
+assert(val = 2)
+```
 
 Through returned values:
 
-    local env = { amount = 1 }
-    local result = sandbox.run('return amount + 1', { env = env })
-    assert(result = 2)
-
+```lua
+local env = { amount = 1 }
+local result = sandbox.run('return amount + 1', { env = env })
+assert(result = 2)
+```
 
 Installation
 ============
