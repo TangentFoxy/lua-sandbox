@@ -149,7 +149,7 @@ Through side effects, like writing to a database. You will have to provide the s
 
     local val = 1
     local env = { write_db = function(new_val) val = new_val end }
-    sandbox.run('write_db(2)')
+    sandbox.run('write_db(2)', { env = env })
     assert(val = 2)
 
 Through returned values:
